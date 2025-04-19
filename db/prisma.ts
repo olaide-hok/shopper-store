@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {neonConfig} from '@neondatabase/serverless';
 import {PrismaNeon} from '@prisma/adapter-neon';
-import {PrismaClient} from '@/lib/generated/prisma';
+import {PrismaClient} from '@prisma/client';
+// import {PrismaClient} from '@/lib/generated/prisma';
 
 import ws from 'ws';
 
@@ -16,12 +17,12 @@ export const prisma = new PrismaClient({adapter}).$extends({
     result: {
         product: {
             price: {
-                compute(product) {
+                compute(product: any) {
                     return product.price.toString();
                 },
             },
             rating: {
-                compute(product) {
+                compute(product: any) {
                     return product.rating.toString();
                 },
             },
