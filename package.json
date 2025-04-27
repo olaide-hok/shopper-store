@@ -2,6 +2,16 @@
     "name": "shopper-store",
     "version": "0.1.0",
     "private": true,
+    "author": "Habeeb Kareem",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/olaide-hok/shopper-store.git"
+    },
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/olaide-hok/shopper-store.git/issues"
+    },
+    "homepage": "https://github.com/olaide-hok/shopper-store.git#readme",
     "scripts": {
         "dev": "next dev",
         "build": "next build",
