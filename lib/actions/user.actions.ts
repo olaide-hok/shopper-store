@@ -15,7 +15,8 @@ import {formatError} from '../utils';
 import {ShippingAddress} from '@/types';
 import {z} from 'zod';
 import {PAGE_SIZE} from '../constants';
-import {Prisma} from '@prisma/client';
+// import {Prisma} from '@prisma/client';
+import {Prisma} from '@/lib/generated/prisma';
 import {revalidatePath} from 'next/cache';
 
 // Sign in the user with credentials
