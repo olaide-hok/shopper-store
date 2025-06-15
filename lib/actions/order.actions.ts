@@ -13,7 +13,7 @@ import {revalidatePath} from 'next/cache';
 // import {Prisma} from '@prisma/client';
 import {Prisma} from '@/lib/generated/prisma';
 import {PAGE_SIZE} from '../constants';
-import {sendPurchaseReceipt} from '@/email';
+// import {sendPurchaseReceipt} from '@/email';
 
 // Create order and create the order items
 export async function createOrder() {
@@ -264,13 +264,13 @@ export async function updateOrderToPaid({
 
     if (!updatedOrder) throw new Error('Order not found');
 
-    sendPurchaseReceipt({
-        order: {
-            ...updatedOrder,
-            shippingAddress: updatedOrder.shippingAddress as ShippingAddress,
-            paymentResult: updatedOrder.paymentResult as PaymentResult,
-        },
-    });
+    // sendPurchaseReceipt({
+    //     order: {
+    //         ...updatedOrder,
+    //         shippingAddress: updatedOrder.shippingAddress as ShippingAddress,
+    //         paymentResult: updatedOrder.paymentResult as PaymentResult,
+    //     },
+    // });
 }
 
 // Get user's orders
