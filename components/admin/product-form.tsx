@@ -38,10 +38,10 @@ const ProductForm = ({
     const router = useRouter();
 
     const form = useForm<z.infer<typeof insertProductSchema>>({
-        resolver:
-            type === 'Update'
-                ? zodResolver(updateProductSchema)
-                : zodResolver(insertProductSchema),
+        resolver: (type === 'Update'
+            ? zodResolver(updateProductSchema)
+            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              zodResolver(insertProductSchema)) as any,
         defaultValues:
             product && type === 'Update' ? product : productDefaultValues,
     });
@@ -293,11 +293,9 @@ const ProductForm = ({
                                                     onUploadError={(
                                                         error: Error
                                                     ) => {
-                                                        toast({
-                                                            variant:
-                                                                'destructive',
-                                                            description: `ERROR! ${error.message}`,
-                                                        });
+                                                        toast.error(
+                                                            `ERROR! ${error.message}`
+                                                        );
                                                     }}
                                                 />
                                             </FormControl>
@@ -348,10 +346,7 @@ const ProductForm = ({
                                         form.setValue('banner', res[0].url);
                                     }}
                                     onUploadError={(error: Error) => {
-                                        toast({
-                                            variant: 'destructive',
-                                            description: `ERROR! ${error.message}`,
-                                        });
+                                        toast.error(`ERROR! ${error.message}`);
                                     }}
                                 />
                             )}
