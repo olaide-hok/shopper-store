@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import NextAuth from 'next-auth';
+import NextAuth, {type NextAuthConfig} from 'next-auth';
 import {authConfig} from './auth.config';
 import {PrismaAdapter} from '@auth/prisma-adapter';
 import {prisma} from '@/db/prisma';
@@ -7,7 +7,7 @@ import {cookies} from 'next/headers';
 import {compare} from './lib/encrypt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export const config = {
+export const config: NextAuthConfig = {
     pages: {
         signIn: '/sign-in',
         error: '/sign-in',
