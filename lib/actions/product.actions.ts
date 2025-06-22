@@ -3,7 +3,6 @@ import {convertToPlainObject, formatError} from '../utils';
 import {LATEST_PRODUCTS_LIMIT, PAGE_SIZE} from '../constants';
 import {prisma} from '@/db/prisma';
 import {Prisma} from '@prisma/client';
-// import {Prisma} from '@/lib/generated/prisma';
 import {revalidatePath} from 'next/cache';
 import {insertProductSchema, updateProductSchema} from '../validators';
 import {z} from 'zod';
@@ -140,7 +139,9 @@ export async function deleteProduct(id: string) {
 export async function createProduct(data: z.infer<typeof insertProductSchema>) {
     try {
         const product = insertProductSchema.parse(data);
-        await prisma.product.create({data: product});
+        await prisma.product.create({
+            data: product as Prisma.ProductCreateInput,
+        });
 
         revalidatePath('/admin/products');
 
