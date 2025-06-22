@@ -44,9 +44,23 @@ const OrderDetailsPage = async (props: {
 
     return (
         <OrderDetailsTable
+            // order={{
+            //     ...order,
+            //     shippingAddress: order.shippingAddress as ShippingAddress,
+            // }}
+
             order={{
                 ...order,
                 shippingAddress: order.shippingAddress as ShippingAddress,
+                user: {
+                    connect: {id: order.userId}, // Add the required connect relation
+                    name: order.user?.name || '', // Fallback if user data isn't populated
+                    email: order.user?.email || '',
+                },
+                orderitems: order.orderitems?.map((item) => ({
+                    ...item,
+                    // Ensure orderitems match the expected type if needed
+                })),
             }}
             stripeClientSecret={client_secret}
             paypalClientId={process.env.PAYPAL_CLIENT_ID || 'sb'}
