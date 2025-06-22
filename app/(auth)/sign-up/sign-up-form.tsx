@@ -10,8 +10,12 @@ import {useFormStatus} from 'react-dom';
 import {signUpUser} from '@/lib/actions/user.actions';
 import {useSearchParams} from 'next/navigation';
 
+type AuthResponse = {
+    success: boolean;
+    message: string;
+};
 const SignUpForm = () => {
-    const [data, action] = useActionState(signUpUser, {
+    const [data, action] = useActionState<AuthResponse, FormData>(signUpUser, {
         success: false,
         message: '',
     });
