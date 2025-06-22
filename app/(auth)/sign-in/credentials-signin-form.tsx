@@ -10,11 +10,19 @@ import {useFormStatus} from 'react-dom';
 import {signInWithCredentials} from '@/lib/actions/user.actions';
 import {useSearchParams} from 'next/navigation';
 
+type AuthResponse = {
+    success: boolean;
+    message: string;
+};
+
 const CredentialsSignInForm = () => {
-    const [data, action] = useActionState(signInWithCredentials, {
-        success: false,
-        message: '',
-    });
+    const [data, action] = useActionState<AuthResponse, FormData>(
+        signInWithCredentials,
+        {
+            success: false,
+            message: '',
+        }
+    );
 
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/';
