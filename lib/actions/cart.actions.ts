@@ -8,7 +8,6 @@ import {prisma} from '@/db/prisma';
 import {cartItemSchema, insertCartSchema} from '../validators';
 import {revalidatePath} from 'next/cache';
 import {Prisma} from '@prisma/client';
-// import {Prisma} from '@/lib/generated/prisma';
 
 // Calculate cart prices
 const calcPrice = (items: CartItem[]) => {
@@ -61,8 +60,23 @@ export async function addItemToCart(data: CartItem) {
             });
 
             // Add to database
+            // await prisma.cart.create({
+            //     data: newCart,
+            // });
+
+            // Convert string prices to Decimal-compatible values
+            const parsedCart: Prisma.CartUncheckedCreateInput = {
+                userId: newCart.userId,
+                sessionCartId: newCart.sessionCartId,
+                items: newCart.items as Prisma.InputJsonValue[],
+                itemsPrice: new Prisma.Decimal(newCart.itemsPrice),
+                totalPrice: new Prisma.Decimal(newCart.totalPrice),
+                shippingPrice: new Prisma.Decimal(newCart.shippingPrice),
+                taxPrice: new Prisma.Decimal(newCart.taxPrice),
+            };
+
             await prisma.cart.create({
-                data: newCart,
+                data: parsedCart,
             });
 
             // Revalidate product page
