@@ -12,7 +12,6 @@ import {CartItem, PaymentResult, ShippingAddress} from '@/types';
 import {paypal} from '../paypal';
 import {revalidatePath} from 'next/cache';
 import {Prisma} from '@prisma/client';
-// import {Prisma} from '@/lib/generated/prisma';
 import {PAGE_SIZE} from '../constants';
 // import {sendPurchaseReceipt} from '@/email';
 
@@ -54,7 +53,7 @@ export async function createOrder() {
 
         // Create order object
         const order = insertOrderSchema.parse({
-            userId: user.id,
+            user: {connect: {id: user.id}}, // Use relation connection
             shippingAddress: user.address,
             paymentMethod: user.paymentMethod,
             itemsPrice: cart.itemsPrice,
@@ -66,14 +65,24 @@ export async function createOrder() {
         // Create a transaction to create order and order items in database
         const insertedOrderId = await prisma.$transaction(async (tx) => {
             // Create order
-            const insertedOrder = await tx.order.create({data: order});
+            const insertedOrder = await tx.order.create({
+                data: order as Prisma.OrderCreateInput,
+            });
             // Create order items from the cart items
             for (const item of cart.items as CartItem[]) {
                 await tx.orderItem.create({
                     data: {
-                        ...item,
+                        // ...item,
+                        // price: item.price,
+                        // orderId: insertedOrder.id,
+
+                        order: {connect: {id: insertedOrder.id}},
+                        product: {connect: {id: item.productId}},
+                        qty: item.qty,
                         price: item.price,
-                        orderId: insertedOrder.id,
+                        name: item.name,
+                        slug: item.slug,
+                        image: item.image,
                     },
                 });
             }
