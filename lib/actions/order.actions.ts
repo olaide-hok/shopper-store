@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 
 import {isRedirectError} from 'next/dist/client/components/redirect-error';
@@ -10,8 +11,8 @@ import {prisma} from '@/db/prisma';
 import {CartItem, PaymentResult, ShippingAddress} from '@/types';
 import {paypal} from '../paypal';
 import {revalidatePath} from 'next/cache';
-// import {Prisma} from '@prisma/client';
-import {Prisma} from '@/lib/generated/prisma';
+import {Prisma} from '@prisma/client';
+// import {Prisma} from '@/lib/generated/prisma';
 import {PAGE_SIZE} from '../constants';
 // import {sendPurchaseReceipt} from '@/email';
 

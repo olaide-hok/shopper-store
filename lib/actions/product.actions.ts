@@ -2,8 +2,8 @@
 import {convertToPlainObject, formatError} from '../utils';
 import {LATEST_PRODUCTS_LIMIT, PAGE_SIZE} from '../constants';
 import {prisma} from '@/db/prisma';
-// import {Prisma} from '@prisma/client';
-import {Prisma} from '@/lib/generated/prisma';
+import {Prisma} from '@prisma/client';
+// import {Prisma} from '@/lib/generated/prisma';
 import {revalidatePath} from 'next/cache';
 import {insertProductSchema, updateProductSchema} from '../validators';
 import {z} from 'zod';
